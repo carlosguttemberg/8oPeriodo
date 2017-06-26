@@ -20,6 +20,7 @@ public class TesteWeka {
     /**
      * @param args the command line arguments
      */
+    /*
     public static void main(String[] args) throws Exception {
 
        DataSource ds = new DataSource("src/testeweka/vendas.arff");
@@ -41,5 +42,6 @@ public class TesteWeka {
        System.out.println("Sim: " + probabilidade[1]);
        System.out.println("Não: " + probabilidade[0]); 
     }
+   */
     
 }

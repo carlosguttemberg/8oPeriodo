@@ -17,7 +17,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * @author Leandro
  */
 public class TesteWeka2 {
-
+    /*
     public static void main(String[] args) throws Exception {
 
         DataSource ds = new DataSource("src/testeweka/produtos.arff");
@@ -62,5 +62,6 @@ public class TesteWeka2 {
         }
 
     }
+*/
 
 }

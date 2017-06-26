@@ -15,7 +15,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * @author root
  */
 public class TesteWeka3 {
-
+/*
     public static void main(String[] args) throws Exception {
 
         DataSource ds = new DataSource("src/testeweka/respostas.arff");
@@ -39,7 +39,7 @@ public class TesteWeka3 {
 
         for (AssociationRule a : lista) {
             System.out.println(a);
-        }*/
+        }
 
         ArrayList<Atributo> atributos = new ArrayList();
 
@@ -59,6 +59,6 @@ public class TesteWeka3 {
         }
         
     }
-
+*/
 
 }

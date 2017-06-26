@@ -204,7 +204,8 @@ public class InterfacePrograma extends javax.swing.JFrame {
         // TODO add your handling code here:
         listaSelecionado.addElement(listaAtributo.getModel().getElementAt(listaAtributo.getSelectedIndex()).toString());
         listaAtributoSelecionado.setModel(listaSelecionado);
-        listaAtributo.remove(listaAtributo.getSelectedIndex());
+        lista.remove(listaAtributo.getSelectedIndex());
+        //listaAtributo.remove(listaAtributo.getSelectedIndex());
     }//GEN-LAST:event_adicionarAtributo2ActionPerformed
 
     /**

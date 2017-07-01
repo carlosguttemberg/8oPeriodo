@@ -5,6 +5,15 @@
  */
 package testeweka;
 
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.core.DenseInstance;
+import weka.core.Instance;
+import weka.core.Instances;
+import weka.core.converters.ConverterUtils.DataSource;
 /**
  *
  * @author carlos
@@ -54,6 +63,7 @@ public class CadastrarAluno extends javax.swing.JFrame {
         btRegistrar = new javax.swing.JButton();
         comboIdade = new javax.swing.JComboBox<>();
         comboFilhos = new javax.swing.JComboBox<>();
+        btCarregarArquivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,10 +116,22 @@ public class CadastrarAluno extends javax.swing.JFrame {
         comboAfinidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administracao", "AnalProjetoSistemas", "DesenvdeSistemas", "InfraRedes", "Matematica" }));
 
         btRegistrar.setText("Registrar");
+        btRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRegistrarActionPerformed(evt);
+            }
+        });
 
         comboIdade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "17-20", "21-29", "29-30", "MaisDe30" }));
 
         comboFilhos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Zero", "Um", "Dois", "Tres", "MaiDe3" }));
+
+        btCarregarArquivo.setText("Carregar Arquvo");
+        btCarregarArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCarregarArquivoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,46 +140,46 @@ public class CadastrarAluno extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(comboPerdeuPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(comboTempoChegada, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(comboIngresso, javax.swing.GroupLayout.Alignment.LEADING, 0, 200, Short.MAX_VALUE)
+                                        .addComponent(comboSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(comboPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jLabel6)))
+                            .addComponent(jLabel8))
+                        .addComponent(jLabel10)
+                        .addComponent(comboIdade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btRegistrar))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btCarregarArquivo)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboPerdeuPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(comboTempoChegada, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(comboIngresso, javax.swing.GroupLayout.Alignment.LEADING, 0, 200, Short.MAX_VALUE)
-                                            .addComponent(comboSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(comboPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addComponent(jLabel6)))
-                                .addComponent(jLabel8))
-                            .addComponent(jLabel10)
-                            .addComponent(comboIdade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radioItaperuna)
+                            .addComponent(radioCasado))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(radioItaperuna)
-                                    .addComponent(radioCasado))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(radioCota)
-                                    .addComponent(radioTrabalha)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(comboFilhos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(comboAfinidade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(comboDependencias, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(comboLocomocao, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(comboOrigem, javax.swing.GroupLayout.Alignment.LEADING, 0, 176, Short.MAX_VALUE))))
-                    .addComponent(btRegistrar))
+                            .addComponent(radioCota)
+                            .addComponent(radioTrabalha)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(comboFilhos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboAfinidade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboDependencias, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboLocomocao, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboOrigem, javax.swing.GroupLayout.Alignment.LEADING, 0, 176, Short.MAX_VALUE)))
                 .addContainerGap(117, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -215,12 +237,58 @@ public class CadastrarAluno extends javax.swing.JFrame {
                     .addComponent(comboPerdeuPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboAfinidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btRegistrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btRegistrar)
+                    .addComponent(btCarregarArquivo))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegistrarActionPerformed
+        
+    }//GEN-LAST:event_btRegistrarActionPerformed
+
+    private void carregarArquivo(String caminho) throws Exception{
+        System.out.println(caminho);
+        DataSource ds = new DataSource(caminho);
+        Instances ins = ds.getDataSet();
+        
+        ins.setClassIndex(15);
+        NaiveBayes nb = new NaiveBayes();
+        nb.buildClassifier(ins);
+           
+        System.out.println(nb);
+    }
+    
+    private void btCarregarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCarregarArquivoActionPerformed
+        File arquivos  = null;
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Escolha o(s) arquivo(s)...");
+        fc.setDialogType(JFileChooser.OPEN_DIALOG);
+        fc.setApproveButtonText("OK");
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setMultiSelectionEnabled(true);
+        int resultado = fc.showOpenDialog(fc);
+        
+        try {
+             if (resultado == JFileChooser.APPROVE_OPTION){
+               arquivos = fc.getSelectedFile();
+                 try {
+                     this.carregarArquivo(arquivos.getPath());
+                 } catch (Exception ex) {
+                     Logger.getLogger(InterfacePrograma.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             }
+            //System.out.println(arquivos.getPath());
+            this.carregarArquivo(arquivos.getPath());
+            
+            // listaAtributo = new JList(lista);  
+        } catch (Exception ex) {
+            Logger.getLogger(InterfacePrograma.class.getName()).log(Level.SEVERE, null, ex);
+        }                                       
+    }//GEN-LAST:event_btCarregarArquivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,6 +326,7 @@ public class CadastrarAluno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btCarregarArquivo;
     private javax.swing.JButton btRegistrar;
     private javax.swing.JComboBox<String> comboAfinidade;
     private javax.swing.JComboBox<String> comboDependencias;

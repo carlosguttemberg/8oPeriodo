@@ -15,6 +15,8 @@ import javax.swing.JList;
 import weka.associations.Apriori;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Remove;
 
 /**
  *
@@ -26,6 +28,8 @@ public class InterfacePrograma extends javax.swing.JFrame {
     /**
      * Creates new form InterfacePrograma
      */
+    DataSource ds;
+    Instances data;
     public InterfacePrograma() {
         initComponents();
     }
@@ -46,6 +50,7 @@ public class InterfacePrograma extends javax.swing.JFrame {
         listaAtributoSelecionado = new javax.swing.JList<>();
         removerAtributo2 = new javax.swing.JButton();
         adicionarAtributo2 = new javax.swing.JButton();
+        btGerar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -57,29 +62,24 @@ public class InterfacePrograma extends javax.swing.JFrame {
             }
         });
 
-        listaAtributo.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listaAtributo.setName("listaAtrinuto"); // NOI18N
         jScrollPane1.setViewportView(listaAtributo);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Importar Arquivo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        listaAtributoSelecionado.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(listaAtributoSelecionado);
 
         removerAtributo2.setText("<<");
+        removerAtributo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerAtributo2ActionPerformed(evt);
+            }
+        });
 
         adicionarAtributo2.setText(">>");
         adicionarAtributo2.setName("adicionarAtributo"); // NOI18N
@@ -89,23 +89,33 @@ public class InterfacePrograma extends javax.swing.JFrame {
             }
         });
 
+        btGerar.setText("Gerar");
+        btGerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGerarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(adicionarAtributo2, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                            .addComponent(removerAtributo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(adicionarAtributo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(removerAtributo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(53, 53, 53)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(41, 41, 41)
+                .addComponent(btGerar)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +132,9 @@ public class InterfacePrograma extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(removerAtributo2)
                         .addGap(81, 81, 81)
-                        .addComponent(jButton1)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(btGerar))))
                 .addContainerGap())
         );
 
@@ -139,9 +151,9 @@ public class InterfacePrograma extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
     private void carregarArquivo(String caminho) throws Exception{
         System.out.println(caminho);
-        caminho = "src/testeweka/respostas.arff";
-        DataSource ds = new DataSource(caminho);
-        Instances data = ds.getDataSet();
+        //caminho = "src/testeweka/respostas.arff";
+        ds = new DataSource(caminho);
+        data = ds.getDataSet();
         
         data.setClassIndex(data.numAttributes() - 1);
 
@@ -184,15 +196,15 @@ public class InterfacePrograma extends javax.swing.JFrame {
         int resultado = fc.showOpenDialog(fc);
         
         try {
-            // if (resultado == JFileChooser.APPROVE_OPTION){
-            //   arquivos = fc.getSelectedFile();
-            //     try {
-            //         this.carregarArquivo(arquivos.getPath());
-            //     } catch (Exception ex) {
-            //         Logger.getLogger(InterfacePrograma.class.getName()).log(Level.SEVERE, null, ex);
-            //     }
-            // }
-            this.carregarArquivo("");
+             if (resultado == JFileChooser.APPROVE_OPTION){
+               arquivos = fc.getSelectedFile();
+                 try {
+                     this.carregarArquivo(arquivos.getPath());
+                 } catch (Exception ex) {
+                     Logger.getLogger(InterfacePrograma.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             }
+            //this.carregarArquivo("");
             
             // listaAtributo = new JList(lista);  
         } catch (Exception ex) {
@@ -207,6 +219,68 @@ public class InterfacePrograma extends javax.swing.JFrame {
         lista.remove(listaAtributo.getSelectedIndex());
         //listaAtributo.remove(listaAtributo.getSelectedIndex());
     }//GEN-LAST:event_adicionarAtributo2ActionPerformed
+
+    
+    private void removerAtributo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerAtributo2ActionPerformed
+        // TODO add your handling code here:
+        lista.addElement(listaAtributoSelecionado.getModel().getElementAt(listaAtributoSelecionado.getSelectedIndex()).toString());
+        listaAtributo.setModel(lista);
+        listaSelecionado.remove(listaAtributoSelecionado.getSelectedIndex());
+    }//GEN-LAST:event_removerAtributo2ActionPerformed
+
+    private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
+        // TODO add your handling code here:
+        DataSource ds;
+        int[] indices = new int[listaSelecionado.getSize()];
+        try {
+           // ds = new DataSource("");
+            
+          //  Instances data = ds.getDataSet();
+          //  data.setClassIndex(data.numAttributes() - 1);
+
+          //  Apriori apriori = new Apriori();
+          //  apriori.setClassIndex(data.classIndex());
+          //  apriori.buildAssociations(data);
+            
+            Remove remove = new Remove();
+            Instances newData = data;
+            
+         //   System.out.println(listaSelecionado.getElementAt(1).toString());
+         
+            ArrayList<String> valores = new ArrayList();
+            for (int i = 0; i < listaSelecionado.size(); i++){
+              indices[0] = data.attribute(listaSelecionado.getElementAt(i).toString()).index();
+              
+              String [] valor = new String[data.attribute(i).numValues()];
+              for (int j = 0; j < data.attribute(i).numValues(); j++) {
+                  valor[j] = (data.attribute(i).value(j));
+              }
+              remove.setAttributeIndicesArray(indices);
+              remove.setInvertSelection(true);
+              remove.setOptions(valor);
+              System.out.println("" + indices[i]);
+            }
+            
+            
+            
+            //System.out.println(remove.getAttributeIndices());
+            
+            //Filter filter = new Filter() {};
+           // filter.setOptions(options);
+            
+            newData = Filter.useFilter(newData, remove);
+            
+            for (int i = 0; i < listaSelecionado.size(); i++){
+              System.out.println("" + newData.attribute(i).toString());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(InterfacePrograma.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //System.out.println(data.toString());
+
+        
+    }//GEN-LAST:event_btGerarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,6 +324,7 @@ public class InterfacePrograma extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adicionarAtributo2;
+    private javax.swing.JButton btGerar;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

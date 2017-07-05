@@ -80,6 +80,7 @@ public class CadastrarAluno extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
         btAferirMotivacao = new javax.swing.JButton();
+        btAlterarTela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,6 +170,13 @@ public class CadastrarAluno extends javax.swing.JFrame {
             }
         });
 
+        btAlterarTela.setText("Filtrar Regras");
+        btAlterarTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarTelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -230,11 +238,17 @@ public class CadastrarAluno extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btAferirMotivacao)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btAlterarTela)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(5, 5, 5)
+                .addComponent(btAlterarTela)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -307,30 +321,37 @@ public class CadastrarAluno extends javax.swing.JFrame {
          case 1 :
          {
            aluno.setPeriodo("2oP");
+           break;
          }
          case 2 :
          {
            aluno.setPeriodo("3oP");
+           break;
          }
          case 3 :
          {
            aluno.setPeriodo("4oP");
+           break;
          }
          case 4 :
          {
            aluno.setPeriodo("5oP");
+           break;
          }
          case 5 :
          {
            aluno.setPeriodo("6oP");
+           break;
          }
          case 6 :
          {
            aluno.setPeriodo("7oP");
+           break;
          }
          case 7 :
          {
            aluno.setPeriodo("8oP");
+           break;
          }
        }
        
@@ -477,6 +498,13 @@ public class CadastrarAluno extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btAferirMotivacaoActionPerformed
 
+    private void btAlterarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarTelaActionPerformed
+        // TODO add your handling code here:
+        InterfacePrograma form = new InterfacePrograma();
+        form.show();
+        
+    }//GEN-LAST:event_btAlterarTelaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -515,6 +543,7 @@ public class CadastrarAluno extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabela;
     private javax.swing.JButton btAferirMotivacao;
+    private javax.swing.JButton btAlterarTela;
     private javax.swing.JButton btCarregarArquivo;
     private javax.swing.JButton btRegistrar;
     private javax.swing.JComboBox<String> comboAfinidade;

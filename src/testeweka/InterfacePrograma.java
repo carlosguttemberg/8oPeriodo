@@ -16,6 +16,7 @@ import weka.associations.Apriori;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.NumericToNominal;
 import weka.filters.unsupervised.attribute.Remove;
 
 /**
@@ -25,6 +26,7 @@ import weka.filters.unsupervised.attribute.Remove;
 public class InterfacePrograma extends javax.swing.JFrame {
     private DefaultListModel lista            = new DefaultListModel();
     private DefaultListModel listaSelecionado = new DefaultListModel();
+    int[] indices;
     /**
      * Creates new form InterfacePrograma
      */
@@ -51,6 +53,13 @@ public class InterfacePrograma extends javax.swing.JFrame {
         removerAtributo2 = new javax.swing.JButton();
         adicionarAtributo2 = new javax.swing.JButton();
         btGerar = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textoResultado = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        textQtdeArea = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -96,45 +105,79 @@ public class InterfacePrograma extends javax.swing.JFrame {
             }
         });
 
+        textoResultado.setColumns(20);
+        textoResultado.setRows(5);
+        jScrollPane3.setViewportView(textoResultado);
+
+        jLabel1.setText("Atributos");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Tela de Cálculos para o Apriori");
+
+        jLabel3.setText("Atributos Removidos");
+
+        jLabel4.setText("Regras");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(adicionarAtributo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(removerAtributo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(53, 53, 53)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(41, 41, 41)
-                .addComponent(btGerar)
-                .addGap(29, 29, 29))
+                .addComponent(jLabel2)
+                .addGap(156, 156, 156))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                                .addGap(101, 101, 101)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(removerAtributo2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(adicionarAtributo2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textQtdeArea, javax.swing.GroupLayout.Alignment.LEADING))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btGerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 70, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(adicionarAtributo2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(removerAtributo2)
-                        .addGap(81, 81, 81)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(btGerar))))
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textQtdeArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btGerar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -162,7 +205,7 @@ public class InterfacePrograma extends javax.swing.JFrame {
         apriori.buildAssociations(data);
         
         ArrayList<Atributo> atributos = new ArrayList();
-
+        indices = new int[data.numAttributes()];
         for (int i = 0; i < data.numAttributes(); i++) {
             Atributo a = new Atributo();
             a.setNome(data.attribute(i).name());
@@ -172,6 +215,7 @@ public class InterfacePrograma extends javax.swing.JFrame {
             }
             a.setValores(valores);
             atributos.add(a);
+            indices[i] = i + 1;
         }
         
         for (Atributo a : atributos) {
@@ -230,9 +274,11 @@ public class InterfacePrograma extends javax.swing.JFrame {
 
     private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
         // TODO add your handling code here:
-        DataSource ds;
-        int[] indices = new int[listaSelecionado.getSize()];
+        //DataSource ds;
+        String associationRules = null;
+        //int[] indices = new int[listaSelecionado.getSize()];
         String [] valor = new String[2];
+        String valorRemovido;
         try {
            // ds = new DataSource("");
             
@@ -244,39 +290,73 @@ public class InterfacePrograma extends javax.swing.JFrame {
           //  apriori.buildAssociations(data);
             
             Remove remove = new Remove();
-            Instances newData = data;
-            
+            Instances newData  = data;
+            Instances novoDado = data;
          //   System.out.println(listaSelecionado.getElementAt(1).toString());
          
             ArrayList<String> valores = new ArrayList();
             valor[0] = "-R";
+            valorRemovido = "";
+            
             for (int i = 0; i < listaSelecionado.size(); i++){
-              indices[i] = data.attribute(listaSelecionado.getElementAt(i).toString()).index();
+             // indices[i] = data.attribute(listaSelecionado.getElementAt(i).toString()).index();
               valor[1]   = valor[1] +  "" + data.attribute(listaSelecionado.getElementAt(i).toString()).index();
               
-              if (i != listaSelecionado.size() -1){
-                valor[1] = valor[1] + ","  ;
-              }   
+            //  if (i != listaSelecionado.size() -1){
+              valor[1] = valor[1] + ","  ;
+              
+              valorRemovido = valorRemovido + data.attribute(listaSelecionado.getElementAt(i).toString()).index() + ",";
+            //  }   
             }
             
-           remove.setAttributeIndicesArray(indices);
-           remove.setInvertSelection(true);
-           remove.setOptions(valor);
-           remove.setInputFormat(data);
-           newData = Filter.useFilter(data, remove);
-           
-           //System.out.println(newData);
-           //System.out.println(valor[0]);
-            //System.out.println(remove.getAttributeIndices());
             
-            //Filter filter = new Filter() {};
-           // filter.setOptions(options);
+            associationRules(data, indices, valorRemovido);
             
-        //    newData = Filter.useFilter(newData, remove);
             
-           // for (int i = 0; i < listaSelecionado.size(); i++){
-           //   System.out.println("" + newData.attribute(i).toString());
-           // }
+         //   remove.setAttributeIndicesArray(indices);
+         //   remove.setInvertSelection(false);
+           // System.out.println(novoDado);
+        //    try {
+        //      remove.setOptions(valor);
+        //      remove.setInputFormat(data);
+              //newData = Filter.useFilter(novoDado, remove);
+        //    } catch (Exception e) {
+        //      e.printStackTrace();
+        //    }
+        //System.out.println(remove.toString());
+        //    try {
+        //      remove.setOptions(valor);
+        //      remove.setInputFormat(novoDado);
+        //      newData = Filter.useFilter(novoDado, remove);
+        //    } catch (Exception e) {
+        //      e.printStackTrace();
+        //    }
+            
+           /*
+           System.out.println(newData.toString());
+
+           Instances filteredData = newData;
+  	   NumericToNominal filter = new NumericToNominal();
+  	   try {
+              filter.setOptions(valor);
+              filter.setInputFormat(filteredData);
+              filteredData = Filter.useFilter(newData, filter);
+           } catch (Exception e1) {
+              e1.printStackTrace();
+           }
+           */
+  	   /*
+           Apriori aprioriObj = new Apriori();
+  	//aprioriObj.setNumRules(Integer.valueOf(jTextFieldRegras.getText()));
+  	   try {
+             aprioriObj.buildAssociations(filteredData);
+           } catch (Exception e) {
+              e.printStackTrace();
+           }
+  	   associationRules = aprioriObj.toString();
+  	   System.out.println("A Priori Rules: "+associationRules);
+           */
+         
         } catch (Exception ex) {
             Logger.getLogger(InterfacePrograma.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -286,6 +366,52 @@ public class InterfacePrograma extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btGerarActionPerformed
 
+     public void associationRules(Instances data, int[] indexes, String atributosRemovidos) throws Exception{
+     
+        String associationRules = null;
+        Instances newData = data;
+        String[] options = new String[2];
+        options[0] = "-R";
+        options[1] = atributosRemovidos;
+        Remove remove = new Remove();
+        remove.setAttributeIndicesArray(indexes);
+        remove.setInvertSelection(false);
+        System.out.println("REMOVIDOS = " +atributosRemovidos);
+        //System.out.println(remove.toString());
+        try {
+            remove.setOptions(options);
+            remove.setInputFormat(data);
+            newData = Filter.useFilter(data, remove);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println(newData.toString());
+
+        Instances filteredData = newData;
+  	NumericToNominal filter = new NumericToNominal();
+  	try {
+            filter.setOptions(options);
+            filter.setInputFormat(filteredData);
+            filteredData = Filter.useFilter(newData, filter);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+  	
+  	Apriori aprioriObj = new Apriori();
+  	aprioriObj.setNumRules(Integer.valueOf(textQtdeArea.getText()));
+  	try {
+            aprioriObj.buildAssociations(filteredData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+  	textoResultado.setText(aprioriObj.toString());
+  	System.out.println("A Priori Rules: "+associationRules);
+     
+        
+     
+    }
+     
     /**
      * @param args the command line arguments
      */
@@ -330,10 +456,17 @@ public class InterfacePrograma extends javax.swing.JFrame {
     private javax.swing.JButton adicionarAtributo2;
     private javax.swing.JButton btGerar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<String> listaAtributo;
     private javax.swing.JList<String> listaAtributoSelecionado;
     private javax.swing.JButton removerAtributo2;
+    private javax.swing.JTextField textQtdeArea;
+    private javax.swing.JTextArea textoResultado;
     // End of variables declaration//GEN-END:variables
 }

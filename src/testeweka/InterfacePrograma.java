@@ -232,6 +232,7 @@ public class InterfacePrograma extends javax.swing.JFrame {
         // TODO add your handling code here:
         DataSource ds;
         int[] indices = new int[listaSelecionado.getSize()];
+        String [] valor = new String[2];
         try {
            // ds = new DataSource("");
             
@@ -248,31 +249,34 @@ public class InterfacePrograma extends javax.swing.JFrame {
          //   System.out.println(listaSelecionado.getElementAt(1).toString());
          
             ArrayList<String> valores = new ArrayList();
+            valor[0] = "-R";
             for (int i = 0; i < listaSelecionado.size(); i++){
-              indices[0] = data.attribute(listaSelecionado.getElementAt(i).toString()).index();
+              indices[i] = data.attribute(listaSelecionado.getElementAt(i).toString()).index();
+              valor[1]   = valor[1] +  "" + data.attribute(listaSelecionado.getElementAt(i).toString()).index();
               
-              String [] valor = new String[data.attribute(i).numValues()];
-              for (int j = 0; j < data.attribute(i).numValues(); j++) {
-                  valor[j] = (data.attribute(i).value(j));
-              }
-              remove.setAttributeIndicesArray(indices);
-              remove.setInvertSelection(true);
-              remove.setOptions(valor);
-              System.out.println("" + indices[i]);
+              if (i != listaSelecionado.size() -1){
+                valor[1] = valor[1] + ","  ;
+              }   
             }
             
-            
-            
+           remove.setAttributeIndicesArray(indices);
+           remove.setInvertSelection(true);
+           remove.setOptions(valor);
+           remove.setInputFormat(data);
+           newData = Filter.useFilter(data, remove);
+           
+           //System.out.println(newData);
+           //System.out.println(valor[0]);
             //System.out.println(remove.getAttributeIndices());
             
             //Filter filter = new Filter() {};
            // filter.setOptions(options);
             
-            newData = Filter.useFilter(newData, remove);
+        //    newData = Filter.useFilter(newData, remove);
             
-            for (int i = 0; i < listaSelecionado.size(); i++){
-              System.out.println("" + newData.attribute(i).toString());
-            }
+           // for (int i = 0; i < listaSelecionado.size(); i++){
+           //   System.out.println("" + newData.attribute(i).toString());
+           // }
         } catch (Exception ex) {
             Logger.getLogger(InterfacePrograma.class.getName()).log(Level.SEVERE, null, ex);
         }
